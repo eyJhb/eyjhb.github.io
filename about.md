@@ -4,15 +4,15 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+I go under the alias eyJhb, as it hints some of my name plus if anyone has worked with security they will recognize it too!
+I have a natural curiosity like any human being, and I continue to explore various parts of technology that I do not understand.
+My main interest is cyber security, which most of my life evolves around.
+My primary OS is Linux and I generally despise having to use anything else, even if required to...
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Feel free to contact me if you have any questions!
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+The source for this blog can be found [here][blog-src].
 
+PS: Lets not forget that I am from Denmark, and strive to change how companies in Denmark see cyber security and how the act towards breaches, holes, exploits, etc.
 
-[jekyll-organization]: https://github.com/jekyll
+[blog-src]: https://github.com/eyJhb/eyjhb.github.io
