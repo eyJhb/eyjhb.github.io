@@ -7,7 +7,7 @@ RUN apk add --no-cache \
     apk del ruby-dev alpine-sdk
 
 RUN \
-    printf "#!/bin/sh\ncd /src\nbundle install\nbundle exec jekyll serve -H 0.0.0.0" > /init.sh && \
+    printf "#!/bin/sh\ncd /src\nbundle install\nbundle exec jekyll serve --watch --drafts --future -H 0.0.0.0" > /init.sh && \
     chmod +x /init.sh
 
 ENTRYPOINT ["/init.sh"]
