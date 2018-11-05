@@ -23,7 +23,15 @@ show_excerpts: true
 markdown: kramdown
 theme: minima
 plugins:
+  - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
   
-
+# stuff to exclude
+exclude:
+  - CNAME
+  - readme.md
+  - Dockerfile
+  - run.sh
+  - Gemfile
+  - Gemfile.lock
