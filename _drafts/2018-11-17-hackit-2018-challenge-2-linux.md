@@ -5,17 +5,19 @@ title:  "Hack IT 2018 - Challenge 2 - Crymore"
 date:   2018-11-17 18:00:00 +0000
 categories: ctf hackit2018
 ---
-One of the challenges at Hack IT 2018 was regarding ransomware, one specific for Windows and another for Linux.
+One of the challenges at Hack IT 2018 was about ransomware, where one was build specific for Windows and another for Linux.
 I will be focusing on the one for Linux in this posts, which was called `crymore`.
 Crymore consisted of the following three parts:
 
-- crymore
-- crymore.py
-- flag.important.CryMoreQQ
+- crymore (binary file)
+- crymore.py (python script)
+- flag.important.CryMoreQQ (encrypted file containing the flag)
 
-`crymore` is a executable binary, which calls `crymore.py <encryption-key>` which then looks for any files with the extension `.important` and encrypts them.
-`flag.important.CyrMoreQQ` is the flag that we need to decrypt somehow, by exploiting whatever weakness the ransomware has.
+`crymore` is a executable binary, which calls `crymore.py <encryption-key>`
+ which then looks for any files with the extension `.important` in the root directory (`/`) and encrypts them.
+`flag.important.CyrMoreQQ` is the flag that we need to decrypt somehow, by exploiting whatever weakness the crymore has.
 
+`crymore.py` looks like this
 ```python
 #!/usr/bin/env python3
 import os
@@ -66,7 +68,7 @@ Starting encryption of all important files...
 Done encrypting all files!
 ```
 
-My initial thought was to edit `crymore.py`, to give me the key it uses for encryption.
+My initial thought was to edit `crymore.py`, to give me the key you initialize it with.
 However, this was not as easy as I had thought, as it verifies that `crymore.py` has not been tampered with.
 
 ```bash
@@ -77,7 +79,7 @@ Terminating...
 
 So not being able to edit `crymore.py`, my next thought was to edit the binary file (`crymore`), but seeing as
 I do not have much experience dealing with binary files I would rather avoid this.
-Instead it is possible to modify the `Crypto` library to print the key it uses to encrypt, as it does not do integrity check on this.
+Instead it is possible to modify the `Crypto` library to print the key, as it does not do integrity check the `Crypto` library.
 So now it was just a matter of locating the `Crypto` library.
 
 ```bash
@@ -105,7 +107,8 @@ index 14f68d8..a18ecd7 100644
      :Parameters:
 ```
 
-This results in it printing out the key, when running `./crymore`.
+Now when you initialize the Crypto with the AES key, it will print out the key for us to copy.
+Running `./crymore` now results in the following output.
 
 ```bash
 root@cf5dcfd7d62c:/src# ./crymore
@@ -142,11 +145,12 @@ After this the we have a long line, where the actual encryption happens
 ciphertext = crypto(bytes([p ^ ord(k) for p, k in zip(plaintext, ts[blocksize // 4 + 2: blocksize // 2 + 2] * (blocksize // 4))]))
 ```
 
-It can be seen, that we have some `XOR` going on here, before the actual encryption happens.
-Evaluating `blocksize // 4 + 2` and `blocksize // 2 + 2` gives us `ts[6:10]`, meaning that it uses the last 4 digits in the timestamp to XOR with the plaintext data.
-When it has done the XOR it will the encrypt the XOR'ed data, and write the data in-place of the plaintext data.
+It can be seen, that we have some `XOR` (`p ^ ord(k)`) going on before the actual encryption happens.
+Evaluating `blocksize // 4 + 2` and `blocksize // 2 + 2` in the `ts` statement, gives us `ts[6:10]`,
+meaning that it uses the last 4 digits in the timestamp to XOR with the plaintext data.
+When it has done it will the encrypt the XOR'ed data, and overwrite the plaintext data.
 
-To undo this encryption, we need to rewrite the function in the verse order.
+To undo this encryption, we need to rewrite the function in the reverse order.
 This means first decrypt the data, and then do the XOR again.
 
 ```python
@@ -163,6 +167,7 @@ def decrypt_file(filename, crypto, blocksize=16, ts=0):
 ```
 
 This function read the files (binary), decrypts it using the key, undoes the XOR then adds it to our final text and returns the final text when done.
+
 Now we are nearly ready to decrypt our flag, we only need to rewrite the main code, to try and guess the timestamp for the encryption.
 As we have previously discovered it only uses the last 4 digits of the timestamp, so it is enough for us to guess 10000 times.
 If it reaches a string with `HackIT` in it, we know that it is the flag, so just print and break.
@@ -185,3 +190,18 @@ Finally running the code gives us the flag!
 root@cf5dcfd7d62c:/src# python decrypt.py
 b'There you go, take a well deserved flag:\n\n  HackIT{blackbox_whitebox_deadbox_dropbox}\n\n:-)\n'
 ```
+
+# Final notes
+Instead of editing the `Crypto` library files, to print out the key
+it is possible to use `strace` to print our the argument, passed
+to `crypto.py` when it is called.
+This can be done using the following command
+
+```
+strace -s 128 -f -e execve ./crymore
+```
+
+- `-s 128` -> specifies the maximum length of the strings strace returns
+- `-f` -> trace child processes (when we call `crymore.py`)
+- `-e execve` -> only print information regarding `execve` (used when executing a file)
+- `./crymore` -> our binary file to strace
