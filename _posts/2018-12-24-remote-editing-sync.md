@@ -1,11 +1,13 @@
 ---
 layout: post
 author: eyJhb
-title:  "Editing files remotely using ssh and rsync"
-date:   2018-11-17 18:00:00 +0000
+title:  "Editing files remotely using SSH and rsync"
+date:   2018-11-24 18:00:00 +0000
 categories: productivity
 ---
-Just today I had to code in Go on a Raspberry Pi, and I needed a way of doing this easily using my favourite editor, vim.
+Today I had a scenario where I needed to make a Go program for my Raspberry Pi.
+As I want all my usual vim setup, I wanted to be able to do this from my main computer, and then somehow transfer the files to the Raspberry Pi (so that I am able to run it on the Raspberry Pi).
+Of course I did not want to do transfer the files manually, so I needed to find some way of doing it automatically.  
 The first thing I found, was that it could be done using:
 
 ```
@@ -18,7 +20,7 @@ This is a known issue and has been open since 2015 ([Github Issue][vim-go-issue]
 
 So instead I created this very simple script, which will monitor a directory of your choosing.
 Then each time you change a file, delete something etc. it will fire the rsync to keep your files synced.
-This way `vim-go` does not delete the content of the file!
+This way `vim-go` works perfectly and does not delete the content of the file!
 
 ```
 #!/bin/bash
@@ -51,7 +53,10 @@ while inotifywait -r -e modify,create,delete $DIR; do
 done
 ```
 
+# Notes
 Remember to add your ssh-key to your host, so you do not need to enter your password for each prompt.
 
+Also, if you call the script using `./sync.sh target/` it will take the content INSIDE the folder without including the parent folder.
+So to avoid this behaviour use `./sync.sh target` instead.
 
 [vim-go-issue]: https://github.com/fatih/vim-go/issues/632
