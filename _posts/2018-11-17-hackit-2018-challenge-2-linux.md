@@ -2,7 +2,7 @@
 layout: post
 author: eyJhb
 title:  "Hack IT 2018 - Challenge 2 - Crymore"
-date:   2018-11-17 18:00:00 +0000
+date:   2018-11-17 11:00:00 +0000
 categories: ctf hackit2018
 ---
 One of the challenges at Hack IT 2018 was about ransomware, where one was build specific for Windows and another for Linux.
@@ -15,7 +15,7 @@ Crymore consisted of the following three parts:
 
 `crymore` is a executable binary, which calls `crymore.py <encryption-key>`
  which then looks for any files with the extension `.important` in the root directory (`/`) and encrypts them.
-`flag.important.CyrMoreQQ` is the flag that we need to decrypt somehow, by exploiting whatever weakness the crymore has.
+`flag.important.CyrMoreQQ` is the flag that we need to decrypt somehow, by exploiting whatever weakness crymore has.
 
 `crymore.py` looks like this
 ```python
@@ -68,7 +68,7 @@ Starting encryption of all important files...
 Done encrypting all files!
 ```
 
-My initial thought was to edit `crymore.py`, to give me the key you initialize it with.
+My initial thought was to edit `crymore.py`, to give me the encryption key.
 However, this was not as easy as I had thought, as it verifies that `crymore.py` has not been tampered with.
 
 ```bash
@@ -79,7 +79,7 @@ Terminating...
 
 So not being able to edit `crymore.py`, my next thought was to edit the binary file (`crymore`), but seeing as
 I do not have much experience dealing with binary files I would rather avoid this.
-Instead it is possible to modify the `Crypto` library to print the key, as it does not do integrity check the `Crypto` library.
+Instead it is possible to modify the `Crypto` library to print the key, as it does not do integrity check on the `Crypto` library.
 So now it was just a matter of locating the `Crypto` library.
 
 ```bash
@@ -148,7 +148,7 @@ ciphertext = crypto(bytes([p ^ ord(k) for p, k in zip(plaintext, ts[blocksize //
 It can be seen, that we have some `XOR` (`p ^ ord(k)`) going on before the actual encryption happens.
 Evaluating `blocksize // 4 + 2` and `blocksize // 2 + 2` in the `ts` statement, gives us `ts[6:10]`,
 meaning that it uses the last 4 digits in the timestamp to XOR with the plaintext data.
-When it has done it will the encrypt the XOR'ed data, and overwrite the plaintext data.
+When it has done this it will then encrypt the XOR'ed data, and overwrite the plaintext data.
 
 To undo this encryption, we need to rewrite the function in the reverse order.
 This means first decrypt the data, and then do the XOR again.
@@ -179,7 +179,7 @@ If it reaches a string with `HackIT` in it, we know that it is the flag, so just
         ctr = Counter.new(128)
         crypt = AES.new(key, AES.MODE_CTR, counter=ctr)
         plain = decrypt_file("flag.important.CryMoreQQ", crypt.decrypt, ts=ctime)
-        if b"Hack" in plain:
+        if b"HackIT" in plain:
             print(plain)
             break
 ```

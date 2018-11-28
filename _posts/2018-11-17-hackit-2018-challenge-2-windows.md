@@ -2,12 +2,12 @@
 layout: post
 author: eyJhb
 title:  "Hack IT 2018 - Challenge 2 - Gibemoni"
-date:   2018-11-17 18:00:00 +0000
+date:   2018-11-17 10:00:00 +0000
 categories: ctf hackit2018
 ---
 In a previous post found ([Hack IT 2018 - Challenge 2 - Crymore]({% post_url 2018-11-17-hackit-2018-challenge-2-linux %})), 
 I explained how break the Crymore ransomware. 
-This post will instead focus on its Windows version valled `Givemoni`, which uses a completely
+This post will instead focus on its Windows version called `Givemoni`, which uses a completely
 different tactic of encrypting the users data.
 
 The challenge contained the following two files:
@@ -18,7 +18,7 @@ The challenge contained the following two files:
 First thing I always do when I get a binary, is to just run strings on it, `strings gibemoni.exe`.
 Doing this, reveals a lot of strings containing the keyword `.pycPK`, which quickly
 lead me to believe that this was some Python code converted to a `.exe` file.
-Running a quick `strings gibemoni.exe | grep -i python` reveals many strings, containing the keyword Python.
+Running `strings gibemoni.exe | grep -i python` reveals many strings containing the keyword Python.
 
 ```
 ,C:\Python34\lib\encodings\iso2022_jp_2004.pyr
@@ -31,8 +31,8 @@ C:\Python34\lib\socket.py
 C:\Users\martin\34\python\PCbuild\_lzma.pdb
 ```
 
-From this we now know, that we are dealing with Python code converted to a `.exe file`,
-and it was properly done using `py2exe`, which is the most popular tool for this task.
+From this we now know that we are dealing with Python code converted to a `.exe file`,
+and it was properly done using `py2exe` which is the most popular tool for this task.
 Besides this it can also be noted, that the version used for this is Python 3.4.
 
 Now we need to extract the sourcecode for Gibemoni, which can be done using `unpy2exe` and `uncompyle6`
@@ -112,12 +112,12 @@ Keep in mind, I have cut off the last part which printed out the banner.
 But now we can see what happens, when the ransomware encrypts the files.
 
 On first glance in the `__main__`, we see that is generates a random 32 byte key,
-that is uses for encryption.
+that is used for encryption.
 Looking at the `encrypt_file` function, we can see that it accepts a `filename` and a `key`.
 The key is basically used to XOR the plaintext with.
-This means that we need to find some what, of recreating the key, that was used to encrypt our flag.
+This means that we need to find some way of recreating the key that was used to encrypt our flag.
 
-As we know that the flag was a `.pdf` file, we know the first 7 bytes of the file, that all pdfs starts with `%PDF-1.`.
+As we know that the flag was a `.pdf` file, we know the first 7 bytes of the file, as all pdfs starts with `%PDF-1.`.
 This means that we can find the first 7 bytes of the key, which will then allow us to find other patterns in the pdf,
 as it reuses the key throughout the file.
 This in turns, allows us to guess patterns until we have the full key used to XOR our flag.
@@ -197,7 +197,7 @@ So explaining this Python script step-by-step, we can see that we have our class
 The first function `getData`, takes a filename and return the content of the file as a bytearray.
 
 The next function `encrypt`, takes a bytearray and a key, then it creates a empty bytearray with the same length as the given bytearray.
-After this it will loop over our bytes and XOR it using the specified keep (looping around using modulus) and then return our new XOR'ed bytearray.
+After this it will loop over our bytes and XOR it using the specified key (looping around using modulus) and then return our new XOR'ed bytearray.
 
 The third function `run` is the core of the program, which utilizes the two other functions.
 
