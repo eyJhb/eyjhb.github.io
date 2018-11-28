@@ -2,7 +2,7 @@
 layout: post
 author: eyJhb
 title:  "Editing files remotely using SSH and rsync"
-date:   2018-11-24 18:00:00 +0000
+date:   2018-11-23 18:00:00 +0000
 categories: productivity
 ---
 Today I had a scenario where I needed to make a Go program for my Raspberry Pi.
