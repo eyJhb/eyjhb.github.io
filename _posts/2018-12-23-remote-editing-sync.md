@@ -49,7 +49,6 @@ sync_folder
 # keep pooling for data
 while inotifywait -r -e modify,create,delete $DIR; do
     sync_folder
-    rsync -avz --delete $DIR pi@192.168.1.20:go/src
 done
 ```
 
