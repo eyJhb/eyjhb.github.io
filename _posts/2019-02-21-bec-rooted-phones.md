@@ -165,7 +165,7 @@ Another method I might do in the future, is just take a newer version of the app
 Now I could write another chapter on how BEC could fix this, but as I am currently using this method to access my mobile banking, I would very much enjoy if this continued to work.
 
 # References
-- https://hub.docker.com/r/eyjhb/android-re
-- https://github.com/eyJhb/docker-images/blob/master/tools/android-re/scripts/sign.sh
-- https://www.airpair.com/android/posts/adding-tampering-detection-to-your-android-app
-- https://stackoverflow.com/questions/6358247/detecting-debug-keystore-or-release-keystore-programmatically
+- <https://hub.docker.com/r/eyjhb/android-re>
+- <https://github.com/eyJhb/docker-images/blob/master/tools/android-re/scripts/sign.sh>
+- <https://www.airpair.com/android/posts/adding-tampering-detection-to-your-android-app>
+- <https://stackoverflow.com/questions/6358247/detecting-debug-keystore-or-release-keystore-programmatically>
