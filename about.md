@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Something I go under the alias eyJhb, as it hints some of my name plus if anyone has worked with security they will recognize it too!
+I go under the alias eyJhb, as it hints some of my name plus if anyone has worked with security they will recognize it too!
 I have a natural curiosity like any human being, and I continue to explore various parts of technology that I do not understand.
 My main interest is cyber security, which most of my life evolves around.
 My primary OS is Linux and I generally despise having to use anything else, even if required to...
