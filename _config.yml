@@ -35,3 +35,7 @@ exclude:
   - run.sh
   - Gemfile
   - Gemfile.lock
+  - gemset.nix
+  - result
+  - current
+  - new_current
