@@ -1,7 +1,7 @@
 ---
 layout: post
 author: eyJhb
-title:  "Ingenico - Build to fail"
+title:  "Ingenico - Built to fail"
 date:   2019-03-07 18:00:00 +0000
 categories: repair
 ---
