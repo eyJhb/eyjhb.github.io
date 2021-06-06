@@ -39,3 +39,4 @@ exclude:
   - result
   - current
   - new_current
+include: [".well-known"]
