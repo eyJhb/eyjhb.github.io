@@ -1,9 +1,8 @@
 ---
-layout: post
 author: eyJhb
-title:  "Hack IT 2018 - Challenge 2 - Crymore"
-date:   2018-11-17 11:00:00 +0000
 categories: ctf hackit2018
+date: "2018-11-17T11:00:00Z"
+title: Hack IT 2018 - Challenge 2 - Crymore
 ---
 One of the challenges at Hack IT 2018 was about ransomware, where one was build specific for Windows and another for Linux.
 I will be focusing on the one for Linux in this posts, which was called `crymore`.

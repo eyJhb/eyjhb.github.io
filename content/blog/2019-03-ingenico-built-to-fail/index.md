@@ -1,9 +1,8 @@
 ---
-layout: post
 author: eyJhb
-title:  "Ingenico - Built to fail"
-date:   2019-03-07 18:00:00 +0000
 categories: repair
+date: "2019-03-07T18:00:00Z"
+title: Ingenico - Built to fail
 ---
 Recently I were at [Krop-Sind-Ånd Messerne](https://www.daninfo.dk/) working at the entrance, accepting payments, checking guest lists etc.
 But not many hours in, the payment terminal started to show signs of low battery, and the charging base station were pulled out to charge it.
@@ -11,7 +10,7 @@ Little did I know that there had been trouble with it, and the cable/port needed
 Looking at the charging station, it was clear that the port in the charging station was loose and clearly a connection was broken (as the owner also suspected).
 Knowing the owner of event, I asked if I could take it home to look at and maybe repair!
 
-| ![](/assets/images/ingenico-top.jpg) | ![](/assets/images/ingenico-side.jpg) | ![](/assets/images/ingenico-broken.jpg) |
+| ![](ingenico-top.jpg) | ![](ingenico-side.jpg) | ![](ingenico-broken.jpg) |
 |:---:|:---:|:---:|
 | Top View | Back View | Broken Connector |
 
@@ -25,7 +24,7 @@ The port should be fastened to the board using additional fastening points, whic
 To fix this I got a new adapter from the University I am currently studying at, made two additional holes (one on each side) and got some mounting wire that I could bend into place.
 The final product ended up looking like below.
 
-| ![](/assets/images/ingenico-fixed-back.jpg) | ![](/assets/images/ingenico-fixed-top.jpg) |
+| ![](ingenico-fixed-back.jpg) | ![](ingenico-fixed-top.jpg) |
 |:---:|:---:|:---:|
 | Fixed Backside | Fixed Backside|
 

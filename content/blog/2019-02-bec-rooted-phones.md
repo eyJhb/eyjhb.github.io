@@ -1,9 +1,8 @@
 ---
-layout: post
 author: eyJhb
-title:  "Bypassing BECs Security Measures for Android"
-date:   2019-02-21 18:00:00 +0000
 categories: reverse-engineering
+date: "2019-02-21T18:00:00Z"
+title: Bypassing BECs Security Measures for Android
 ---
 Recently my bank started blocking users, who has rooted their Android phones from using their banking app.
 This was of great annoyance to start with, but I quickly just found a older version of the app without this limitation.

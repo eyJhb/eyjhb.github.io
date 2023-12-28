@@ -1,9 +1,8 @@
 ---
-layout: post
 author: eyJhb
-title:  "Lets get this shit show started"
-date:   2018-11-04 16:08:49 +0000
 categories: intro
+date: "2018-11-04T16:08:49Z"
+title: Lets get this shit show started
 ---
 So this is basically my first blog entry, and it is going to be short!
 I have started this blog, to share some of my project and ideas that I have.

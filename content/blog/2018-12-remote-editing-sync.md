@@ -1,9 +1,8 @@
 ---
-layout: post
 author: eyJhb
-title:  "Editing files remotely using SSH and rsync"
-date:   2018-11-23 18:00:00 +0000
 categories: productivity
+date: "2018-12-23T18:00:00Z"
+title: Editing files remotely using SSH and rsync
 ---
 Today I had a scenario where I needed to make a Go program for my Raspberry Pi.
 As I want all my usual vim setup, I wanted to be able to do this from my main computer, and then somehow transfer the files to the Raspberry Pi (so that I am able to run it on the Raspberry Pi).

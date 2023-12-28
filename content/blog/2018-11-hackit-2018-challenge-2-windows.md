@@ -1,9 +1,8 @@
 ---
-layout: post
 author: eyJhb
-title:  "Hack IT 2018 - Challenge 2 - Gibemoni"
-date:   2018-11-17 10:00:00 +0000
 categories: ctf hackit2018
+date: "2018-11-17T10:00:00Z"
+title: Hack IT 2018 - Challenge 2 - Gibemoni
 ---
 In a previous post found ([Hack IT 2018 - Challenge 2 - Crymore]({% post_url 2018-11-17-hackit-2018-challenge-2-linux %})), 
 I explained how break the Crymore ransomware. 
@@ -142,7 +141,7 @@ And as seen, the result is the original binary sequence.
 
 So putting the information we know together, we can create a simple Python script to make our lives easier.
 
-{% highlight python linenos %}
+{{< highlight python "linenos=table" >}}
 from __future__ import print_function
 import os
 
@@ -190,7 +189,7 @@ class gibi(object):
 
 x = gibi()
 x.run()
-{% endhighlight %}
+{{< / highlight >}}
 
 So explaining this Python script step-by-step, we can see that we have our class `gibi`, followed by tree functions.
 

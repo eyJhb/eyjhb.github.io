@@ -1,14 +1,13 @@
 ---
-layout: post
 author: eyJhb
-title:  "The reason I have 500+ SIM Cards"
-date:   2018-11-05 18:00:00 +0000
 categories: scam
+date: "2018-11-04T18:00:00Z"
+title: The reason I have 500+ SIM Cards
 ---
 Over the past couple of years, I have been asked numerous time why I have such a huge amount of SIM cards.
 Most seem to think I either use them for drug dealing, smuggling or work for a phone company, but it is actually none of it!
 
-![SIM cards](/assets/images/sim-stacked.jpg)
+![SIM cards](sim-stacked.jpg)
 
 ## Background
 SIM cards can be used for various things, where most of these might not be obvious.
@@ -26,7 +25,7 @@ The reason for this was, that the various sites I have used these SIM cards on h
 Therefore each SIM card I have and is in use, have a label on it with a unique increasing number, that corresponds to a excel sheet I used.
 This was a huge amount of work, since you first had to unpack all the SIM cards, then label put all the information into the excel sheet (including turning on the phone, get the number, write it down, write the PUK1/PUK2, PIN and the SIM card number).
 
-![SIM ordered](/assets/images/sim-ordered.jpg)
+![SIM ordered](sim-ordered.jpg)
 
 This it what my organized drawer looks like, where there is N amounts of SIM cards in each slot, that makes it relatively easy to find the SIM card you are looking for.
 
