@@ -31,9 +31,7 @@ jobs:
         name: Setup Pages
         id: pages
       - name: Build with Hugo
-        env:
-          HUGO_ENVIRONMENT: production
-        run: nix-build --arg baseURL "${{ steps.pages.outputs.base_url }}/"
+        run: nix-build --arg baseURL "${{ steps.pages.outputs.base_url }}/" --arg production true
       - uses: actions/upload-pages-artifact@v3
         name: Upload artifact
         with:

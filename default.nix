@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, baseURL ? "http://127.0.0.1" , ... }:
+{ pkgs ? import <nixpkgs> {}, baseURL ? "http://127.0.0.1", production ? false, ... }:
 
 let
   pypreprocessor = pkgs.writers.writePython3 "preprocessor" {} (
@@ -7,14 +7,13 @@ in pkgs.stdenvNoCC.mkDerivation {
   name = "eyjhb-hugo-website";
 
   src = pkgs.lib.cleanSource ./.;
-  # src = ./.;
 
   nativeBuildInputs = with pkgs; [
     hugo
     plantuml
   ];
 
-  HUGO_ENVIRONMENT = "production";
+  HUGO_ENVIRONMENT = if production then "production" else "development";
 
   patchPhase = ''
     find content -type f -name '*.md' | ${pypreprocessor} --overwrite
