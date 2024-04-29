@@ -1,7 +1,12 @@
 { pkgs ? import <nixpkgs> {}, baseURL ? "http://127.0.0.1", production ? false, ... }:
 
 let
-  pypreprocessor = pkgs.writers.writePython3 "preprocessor" {} (
+  pypreprocessor = pkgs.writers.writePython3 "preprocessor" {
+    flakeIgnore = [
+      "E203" # whitespace before ':'
+      "W503" # line break before binary operator
+    ];
+  } (
     builtins.readFile ./scripts/preprocessor.py);
 in pkgs.stdenvNoCC.mkDerivation {
   name = "eyjhb-hugo-website";

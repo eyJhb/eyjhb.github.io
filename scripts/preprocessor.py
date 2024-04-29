@@ -12,7 +12,7 @@ def PlantUMLProcessing(input_text: str) -> str:
         capture_output=True,
         text=True,
     ).stdout
-    plantuml_svg = plantuml_svg_raw[plantuml_svg_raw.find("<svg"):]
+    plantuml_svg = plantuml_svg_raw[plantuml_svg_raw.find("<svg") :]
 
     return f"{plantuml_svg}\n<!-- PLANTUML SOURCE:{input_text}-->\n"
 
@@ -20,11 +20,11 @@ def PlantUMLProcessing(input_text: str) -> str:
 class ProcessingRule:
     def __init__(
         self,
-        re_rule: str,
+        re_rule: re.Pattern,
         processing_func: Callable[[str], str],
         is_raw_html: bool = False,
     ):
-        self.re_rule: re.Pattern = re.compile(re_rule)
+        self.re_rule: re.Pattern = re_rule
         self.processing_func: Callable[[str], str] = processing_func
         self.is_raw_html: bool = is_raw_html
 
@@ -47,9 +47,13 @@ class MarkdownPreProcessor:
             for m in reversed(list(processing_rule.re_rule.finditer(data))):
                 matchGroup = m.groups()[0]
 
-                beforeText = data[:m.start()]
-                afterText = data[m.end():]
+                beforeText = data[: m.start()]
+                afterText = data[m.end() :]
                 newContent = processing_rule.processing_func(matchGroup)
+
+                # ignore this codefence, if inside tilde codefence
+                if self.is_inside_tilde_codefence(data, m.start(), m.end()):
+                    continue
 
                 if processing_rule.is_raw_html:
                     data = (
@@ -67,6 +71,20 @@ class MarkdownPreProcessor:
         else:
             print(data)
 
+    def is_inside_tilde_codefence(
+        self,
+        data: str,
+        start: int,
+        end: int,
+    ) -> bool:
+        re_tilde_codefences = re.compile(r"^~~~([^~]+)\n^~~~", re.MULTILINE)
+
+        for m in re_tilde_codefences.finditer(data):
+            if m.start() <= start <= m.end() and m.start() <= end <= m.end():
+                return True
+
+        return False
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -76,7 +94,7 @@ if __name__ == "__main__":
     mdp = MarkdownPreProcessor(
         processing_rules=[
             ProcessingRule(
-                re_rule=r"```plantuml([^`]+)```",
+                re_rule=re.compile(r"^```plantuml([^`]+)\n^```", re.MULTILINE),
                 processing_func=PlantUMLProcessing,
                 is_raw_html=True,
             )
