@@ -6,8 +6,7 @@ let
       "E203" # whitespace before ':'
       "W503" # line break before binary operator
     ];
-  } (
-    builtins.readFile ./scripts/preprocessor.py);
+  } ./scripts/preprocessor.py;
 in pkgs.stdenvNoCC.mkDerivation {
   name = "eyjhb-hugo-website";
 
@@ -24,8 +23,10 @@ in pkgs.stdenvNoCC.mkDerivation {
     find content -type f -name '*.md' | ${pypreprocessor} --overwrite
   '';
 
-  buildPhase = ''
-    hugo --minify --baseURL "${baseURL}" --destination public
+  buildPhase = let
+    minifyArg = if production then "--minify" else "";
+  in ''
+    hugo ${minifyArg} --baseURL "${baseURL}" --destination public
   '';
 
   installPhase = ''

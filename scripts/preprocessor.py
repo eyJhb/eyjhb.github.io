@@ -14,7 +14,7 @@ def PlantUMLProcessing(input_text: str) -> str:
     ).stdout
     plantuml_svg = plantuml_svg_raw[plantuml_svg_raw.find("<svg") :]
 
-    return f"{plantuml_svg}\n<!-- PLANTUML SOURCE:{input_text}-->\n"
+    return f"{plantuml_svg}\n<!-- PLANTUML SOURCE:\n\n{input_text}\n\n-->\n"
 
 
 class ProcessingRule:

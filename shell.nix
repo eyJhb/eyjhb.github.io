@@ -8,10 +8,7 @@ let
     find ${currentDir} | ${pkgs.entr}/bin/entr -s 'nix-build --out-link ${currentDir}/result --arg baseURL "http://127.0.0.1:8080/" --arg production false'
   '';
 in pkgs.mkShell {
-  
   packages = with pkgs; [
-    # entr
     livebuilder
-    # python3Packages.livereload
   ];
 }
