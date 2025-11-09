@@ -1,4 +1,9 @@
-{ pkgs ? import <nixpkgs> {}, baseURL ? "http://127.0.0.1", production ? false, ... }:
+{
+  pkgs ? import <nixpkgs> { },
+  baseURL ? "http://127.0.0.1",
+  production ? false,
+  ...
+}:
 
 let
   pypreprocessor = pkgs.writers.writePython3 "preprocessor" {
@@ -7,7 +12,8 @@ let
       "W503" # line break before binary operator
     ];
   } ./scripts/preprocessor.py;
-in pkgs.stdenvNoCC.mkDerivation {
+in
+pkgs.stdenvNoCC.mkDerivation {
   name = "eyjhb-hugo-website";
 
   src = pkgs.lib.cleanSource ./.;
@@ -23,15 +29,16 @@ in pkgs.stdenvNoCC.mkDerivation {
     find content -type f -name '*.md' | ${pypreprocessor} --overwrite
   '';
 
-  buildPhase = let
-    minifyArg = if production then "--minify" else "";
-  in ''
-    hugo ${minifyArg} --baseURL "${baseURL}" --destination public
-  '';
+  buildPhase =
+    let
+      minifyArg = if production then "--minify" else "";
+    in
+    ''
+      hugo ${minifyArg} --baseURL "${baseURL}" --destination public
+    '';
 
   installPhase = ''
     mkdir $out
     cp -a public $out
   '';
 }
-  
